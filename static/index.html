@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="zh_Hant">
+<head>
+  <meta charset="utf-8">
+  <title>filitov sample page</title>
+  <style type="text/css">
+
+  </style>
+</head>
+<body>
+
+<h1>範例頁面</h1>
+範例值：<span id="data">值</span>
+
+</body>
+<script type="text/javascript">
+function process_data(v){
+  document.getElementById('data').innerHTML = v;
+}
+
+
+function fetch_from_server(){
+  var req = new XMLHttpRequest();
+  req.open('GET', '/api/test');
+  req.onreadystatechange = function () {
+    if (req.readyState === 4) {
+      console.log(req.responseText);
+      process_data(req.responseText);
+    }
+  };
+  req.send();
+}
+
+
+function repeatedly_get(){
+  fetch_from_server();
+  setTimeout(repeatedly_get, 2000);
+}
+
+
+repeatedly_get();
+</script>
+</html>
